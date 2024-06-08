@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  db:
-    container_name: db
+  postgresdb:
+    container_name: postgresdb
     environment:
       - POSTGRES_PASSWORD=Backtohome1111
       - POSTGRES_USER=duel
@@ -24,8 +24,8 @@ services:
     networks:
       - duel_app
 
-  app:
-    container_name: app
+  application:
+    container_name: application
     build:
       context: .
       dockerfile: Dockerfile
@@ -39,7 +39,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - postgresdb
       - red
     networks:
       - duel_app

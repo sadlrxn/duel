@@ -1,11 +1,13 @@
 let ws = "ws";
-let HOST = "localhost:8080";
+let HOST = "application:8080";
 if (typeof window !== "undefined") {
   if (window.location.hostname !== "localhost") {
     HOST = window.location.host;
-    ws = "wss";
+   // ws = "wss";
   }
 }
+
+// console.log(window.location.hostname)
 
 export const LOW_ROOM_GAME_URL = `${ws}://${HOST}/api/jackpot/low/ws`;
 export const HIGH_ROOM_GAME_URL = `${ws}://${HOST}/api/jackpot/high/ws`;

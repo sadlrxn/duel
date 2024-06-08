@@ -26,7 +26,8 @@ func ConnectDB(DBUrl string) *gorm.DB {
 		},
 	)
 	var err error
-	db, err = gorm.Open(postgres.Open("postgresql://duel:Backtohome1111@db:5433/duel?sslmode=disable"), &gorm.Config{Logger: newLogger, SkipDefaultTransaction: true})
+	log.Println("db url: ", DBUrl)
+	db, err = gorm.Open(postgres.Open(DBUrl), &gorm.Config{Logger: newLogger, SkipDefaultTransaction: true})
 
 	if err != nil {
 		Logger.LogMessage("connect db", "failed", "error", logrus.Fields{"error": err.Error()})
