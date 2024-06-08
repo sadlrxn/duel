@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  db:
+    container_name: db
+    environment:
+      - POSTGRES_PASSWORD=Backtohome1111
+      - POSTGRES_USER=duel
+      - POSTGRES_DB=duel
+    ports:
+      - 5432:5432
+    image: postgres:13
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - duel_app
+
+  red:
+    image: redis:6.2.14-alpine
+    container_name: red
+    ports:
+      - 6379:6379
+    volumes:
+      - redisdata:/data
+    networks:
+      - duel_app
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MASTER_WALLET_PUBLIC_KEY: EEMxfcPwMK615YLbEhq8NVacdmxjkxkok6KXBJBHuZfB
+        GENERATE_SOURCEMAP: false
+        NETWORK:
+        SOLANA_ENDPOINT: https://duelana-dev2e70-9c52.devnet.rpcpool.com/
+        STAGE: DUEL2023
+        HAPPY_HOLIDAY: false
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - red
+    networks:
+      - duel_app
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  duel_app:

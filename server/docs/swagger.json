@@ -1,0 +1,753 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/acceptable-nfts": {
+            "post": {
+                "description": "Get acceptable NFT list.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Acceptable NFTs",
+                "operationId": "get-acceptable-nfts",
+                "parameters": [
+                    {
+                        "description": "MintAddresses of NFTs.",
+                        "name": "mintAddresses",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/types.NftDetails"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/coinflip/get-meta": {
+            "get": {
+                "description": "Get metadata of Coinflip game.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Coinflip"
+                ],
+                "summary": "Meta",
+                "operationId": "coinflip-meta",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/coinflip/history": {
+            "get": {
+                "description": "Get Coinflip game history.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Coinflip"
+                ],
+                "summary": "History",
+                "operationId": "coinflip-history",
+                "parameters": [
+                    {
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Count",
+                        "name": "count",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/types.CoinflipRoundDataPayload"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/coinflip/round-data": {
+            "get": {
+                "description": "Get Coinflip round data.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Coinflip"
+                ],
+                "summary": "Round",
+                "operationId": "coinflip-round",
+                "parameters": [
+                    {
+                        "description": "ID of round",
+                        "name": "roundId",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.CoinflipRoundDataPayload"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/deposited-nfts": {
+            "post": {
+                "description": "Get deposited NFT list.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Deposited NFTs",
+                "operationId": "get-deposited-nfts",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/types.NftDetails"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/jackpot/get-meta": {
+            "get": {
+                "description": "Get metadata of Jackpot game.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Jackpot"
+                ],
+                "summary": "Meta",
+                "operationId": "jackpot-meta",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jackpot/history": {
+            "get": {
+                "description": "Get Jackpot game history.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Jackpot"
+                ],
+                "summary": "History",
+                "operationId": "jackpot-history",
+                "parameters": [
+                    {
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Count",
+                        "name": "count",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/types.JackpotHistoryPayload"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jackpot/round-data": {
+            "get": {
+                "description": "Get Jackpot round data.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Jackpot"
+                ],
+                "summary": "Round",
+                "operationId": "jackpot-round",
+                "parameters": [
+                    {
+                        "description": "ID of round",
+                        "name": "roundId",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/types.PlayerInJackpotRound"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/pay/history": {
+            "get": {
+                "description": "Get payment history.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Payment History",
+                "operationId": "payment-get-history",
+                "parameters": [
+                    {
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Count",
+                        "name": "count",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Filter",
+                        "name": "filter",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/pay/withdraw/nft": {
+            "post": {
+                "description": "Withdraws NFTs on Solana.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Withdraw NFT",
+                "operationId": "payment-withdraw-nft",
+                "parameters": [
+                    {
+                        "description": "MintAddresses of NFTs to withdraw.",
+                        "name": "mintAddresses",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/pay/withdraw/sol": {
+            "post": {
+                "description": "Withdraws chips as SOL on Solana.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Withdraw SOL",
+                "operationId": "payment-withdraw-sol",
+                "parameters": [
+                    {
+                        "description": "The amount of chips to withdraw.",
+                        "name": "usdAmount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/sol-price": {
+            "get": {
+                "description": "Get current price of SOL as USD.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Get SOL Price",
+                "operationId": "payment-get-sol-price",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/user/info": {
+            "post": {
+                "description": "Get user info \u0026 statistics.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "User Info",
+                "operationId": "user-info",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of User",
+                        "name": "userId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name of User",
+                        "name": "userName",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/user/load": {
+            "get": {
+                "description": "Get User Info.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get User Info",
+                "operationId": "user-load",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.User"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/user/login": {
+            "post": {
+                "description": "Request nonce for user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Nonce",
+                "operationId": "user-nonce",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/user/logout": {
+            "post": {
+                "description": "User logout.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout",
+                "operationId": "user-logout",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/user/tip": {
+            "post": {
+                "description": "Send chips to other players.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Tip",
+                "operationId": "user-tip",
+                "parameters": [
+                    {
+                        "description": "Recipient",
+                        "name": "recipient",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Amount",
+                        "name": "amount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Show this activity at chat or not.",
+                        "name": "showInChat",
+                        "in": "body",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "types.CoinflipRoundDataPayload": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "creatorId": {
+                    "type": "integer"
+                },
+                "headsUser": {
+                    "$ref": "#/definitions/types.User"
+                },
+                "prize": {
+                    "type": "integer"
+                },
+                "roundId": {
+                    "type": "integer"
+                },
+                "signedString": {
+                    "type": "string"
+                },
+                "tailsUser": {
+                    "$ref": "#/definitions/types.User"
+                },
+                "ticketId": {
+                    "type": "string"
+                },
+                "winnerId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "types.JackpotHistoryPayload": {
+            "type": "object",
+            "properties": {
+                "chance": {
+                    "type": "number"
+                },
+                "endedAt": {
+                    "type": "string"
+                },
+                "profit": {
+                    "type": "integer"
+                },
+                "roundId": {
+                    "type": "integer"
+                },
+                "signedString": {
+                    "type": "string"
+                },
+                "ticketId": {
+                    "type": "string"
+                },
+                "winner": {
+                    "$ref": "#/definitions/types.User"
+                }
+            }
+        },
+        "types.NftDetails": {
+            "type": "object",
+            "properties": {
+                "collectionImage": {
+                    "type": "string"
+                },
+                "collectionName": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "mintAddress": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                }
+            }
+        },
+        "types.PlayerInJackpotRound": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "betCount": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nftAmount": {
+                    "type": "integer"
+                },
+                "nfts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/types.NftDetails"
+                    }
+                },
+                "usdAmount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "types.User": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

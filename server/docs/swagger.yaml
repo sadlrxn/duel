@@ -1,0 +1,495 @@
+definitions:
+  types.CoinflipRoundDataPayload:
+    properties:
+      amount:
+        type: integer
+      creatorId:
+        type: integer
+      headsUser:
+        $ref: '#/definitions/types.User'
+      prize:
+        type: integer
+      roundId:
+        type: integer
+      signedString:
+        type: string
+      tailsUser:
+        $ref: '#/definitions/types.User'
+      ticketId:
+        type: string
+      winnerId:
+        type: integer
+    type: object
+  types.JackpotHistoryPayload:
+    properties:
+      chance:
+        type: number
+      endedAt:
+        type: string
+      profit:
+        type: integer
+      roundId:
+        type: integer
+      signedString:
+        type: string
+      ticketId:
+        type: string
+      winner:
+        $ref: '#/definitions/types.User'
+    type: object
+  types.NftDetails:
+    properties:
+      collectionImage:
+        type: string
+      collectionName:
+        type: string
+      image:
+        type: string
+      mintAddress:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    type: object
+  types.PlayerInJackpotRound:
+    properties:
+      avatar:
+        type: string
+      betCount:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      nftAmount:
+        type: integer
+      nfts:
+        items:
+          $ref: '#/definitions/types.NftDetails'
+        type: array
+      usdAmount:
+        type: integer
+    type: object
+  types.User:
+    properties:
+      avatar:
+        type: string
+      count:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/acceptable-nfts:
+    post:
+      consumes:
+      - application/json
+      description: Get acceptable NFT list.
+      operationId: get-acceptable-nfts
+      parameters:
+      - description: MintAddresses of NFTs.
+        in: body
+        name: mintAddresses
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.NftDetails'
+            type: array
+        "500":
+          description: Internal Server Error
+      summary: Acceptable NFTs
+      tags:
+      - Payments
+  /api/coinflip/get-meta:
+    get:
+      consumes:
+      - application/json
+      description: Get metadata of Coinflip game.
+      operationId: coinflip-meta
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Meta
+      tags:
+      - Coinflip
+  /api/coinflip/history:
+    get:
+      consumes:
+      - application/json
+      description: Get Coinflip game history.
+      operationId: coinflip-history
+      parameters:
+      - description: Offset
+        in: body
+        name: offset
+        required: true
+        schema:
+          type: integer
+      - description: Count
+        in: body
+        name: count
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.CoinflipRoundDataPayload'
+            type: array
+      summary: History
+      tags:
+      - Coinflip
+  /api/coinflip/round-data:
+    get:
+      consumes:
+      - application/json
+      description: Get Coinflip round data.
+      operationId: coinflip-round
+      parameters:
+      - description: ID of round
+        in: body
+        name: roundId
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.CoinflipRoundDataPayload'
+      summary: Round
+      tags:
+      - Coinflip
+  /api/deposited-nfts:
+    post:
+      consumes:
+      - application/json
+      description: Get deposited NFT list.
+      operationId: get-deposited-nfts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.NftDetails'
+            type: array
+        "500":
+          description: Internal Server Error
+      summary: Deposited NFTs
+      tags:
+      - Payments
+  /api/jackpot/get-meta:
+    get:
+      consumes:
+      - application/json
+      description: Get metadata of Jackpot game.
+      operationId: jackpot-meta
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Meta
+      tags:
+      - Jackpot
+  /api/jackpot/history:
+    get:
+      consumes:
+      - application/json
+      description: Get Jackpot game history.
+      operationId: jackpot-history
+      parameters:
+      - description: Offset
+        in: body
+        name: offset
+        required: true
+        schema:
+          type: integer
+      - description: Count
+        in: body
+        name: count
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.JackpotHistoryPayload'
+            type: array
+      summary: History
+      tags:
+      - Jackpot
+  /api/jackpot/round-data:
+    get:
+      consumes:
+      - application/json
+      description: Get Jackpot round data.
+      operationId: jackpot-round
+      parameters:
+      - description: ID of round
+        in: body
+        name: roundId
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.PlayerInJackpotRound'
+            type: array
+      summary: Round
+      tags:
+      - Jackpot
+  /api/pay/history:
+    get:
+      consumes:
+      - application/json
+      description: Get payment history.
+      operationId: payment-get-history
+      parameters:
+      - description: Offset
+        in: body
+        name: offset
+        required: true
+        schema:
+          type: integer
+      - description: Count
+        in: body
+        name: count
+        required: true
+        schema:
+          type: integer
+      - description: Filter
+        in: body
+        name: filter
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Payment History
+      tags:
+      - Payments
+  /api/pay/withdraw/nft:
+    post:
+      consumes:
+      - application/json
+      description: Withdraws NFTs on Solana.
+      operationId: payment-withdraw-nft
+      parameters:
+      - description: MintAddresses of NFTs to withdraw.
+        in: body
+        name: mintAddresses
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+      summary: Withdraw NFT
+      tags:
+      - Payments
+  /api/pay/withdraw/sol:
+    post:
+      consumes:
+      - application/json
+      description: Withdraws chips as SOL on Solana.
+      operationId: payment-withdraw-sol
+      parameters:
+      - description: The amount of chips to withdraw.
+        in: body
+        name: usdAmount
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+      summary: Withdraw SOL
+      tags:
+      - Payments
+  /api/sol-price:
+    get:
+      consumes:
+      - application/json
+      description: Get current price of SOL as USD.
+      operationId: payment-get-sol-price
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get SOL Price
+      tags:
+      - Payments
+  /api/user/info:
+    post:
+      consumes:
+      - application/json
+      description: Get user info & statistics.
+      operationId: user-info
+      parameters:
+      - description: ID of User
+        in: query
+        name: userId
+        type: integer
+      - description: Name of User
+        in: query
+        name: userName
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.User'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: User Info
+      tags:
+      - User
+  /api/user/load:
+    get:
+      consumes:
+      - application/json
+      description: Get User Info.
+      operationId: user-load
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.User'
+        "401":
+          description: Unauthorized
+      summary: Get User Info
+      tags:
+      - User
+  /api/user/login:
+    post:
+      consumes:
+      - application/json
+      description: Request nonce for user.
+      operationId: user-nonce
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      summary: Get Nonce
+      tags:
+      - User
+  /api/user/logout:
+    post:
+      consumes:
+      - application/json
+      description: User logout.
+      operationId: user-logout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Logout
+      tags:
+      - User
+  /api/user/tip:
+    post:
+      consumes:
+      - application/json
+      description: Send chips to other players.
+      operationId: user-tip
+      parameters:
+      - description: Recipient
+        in: body
+        name: recipient
+        required: true
+        schema:
+          type: integer
+      - description: Amount
+        in: body
+        name: amount
+        required: true
+        schema:
+          type: integer
+      - description: Show this activity at chat or not.
+        in: body
+        name: showInChat
+        schema:
+          type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.User'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Tip
+      tags:
+      - User
+swagger: "2.0"

@@ -1,0 +1,10 @@
+export * from './AuthorizeModal';
+export { default as AuthorizeModal } from './AuthorizeModal';
+export { default as TermsConditionsModal } from './TermsConditionsModal';
+export { default as ProfileModal } from './ProfileModal';
+export { default as TipModal } from './TipModal';
+export { default as LogModal } from './LogModal';
+export { default as DepositWithdrawModal } from './DepositWithdrawModal';
+export { default as JurisdictionsModal } from './JurisdictionsModal';
+export { default as BetAllModal } from './BetAll';
+export { default as RainModal } from './RainModal';

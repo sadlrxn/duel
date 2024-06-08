@@ -1,0 +1,11 @@
+export { default as Snow1 } from './Snow1';
+export { default as Snow2 } from './Snow2';
+export { default as Snow3 } from './Snow3';
+export { default as Snow4 } from './Snow4';
+export { default as Snow5 } from './Snow5';
+export { default as Snow6 } from './Snow6';
+export { default as HatIcon } from './Hat';
+export { default as SnowMan } from './SnowMan';
+export { default as Santa } from './Santa';
+export { default as SantaHorse } from './SantaHorse';
+export { default as BellIcon } from './Bell';
