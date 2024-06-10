@@ -38,6 +38,7 @@ const (
 	TxCrashFee                TransactionType = "crash_fee"
 	TxClaimDailyRaceReward    TransactionType = "claim_daily_race_reward"
 	TxClaimWeeklyRaffleReward TransactionType = "claim_weekly_raffle_reward"
+	TxAdminUserDeposit        TransactionType = "admin_deposit_to_user"
 )
 
 type TransactionStatus string
@@ -65,6 +66,7 @@ const (
 	TransactionCrashBetReferenced           TransactionOwnerType = "tx_crash_bet_referenced"
 	TransactionDailyRaceRewardsReferenced   TransactionOwnerType = "tx_daily_race_rewards_referenced"
 	TransactionWeeklyRaffleRewardReferenced TransactionOwnerType = "tx_weekly_raffle_reward_referenced"
+	TransactionPaymentAdminUserBalanceUpdate TransactionOwnerType = "tx_admin_user_referenced"
 )
 
 type Transaction struct {

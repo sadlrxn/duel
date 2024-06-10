@@ -15,6 +15,7 @@ import (
 	"github.com/Duelana-Team/duelana-v1/controllers/transaction/db_aggregator"
 	"github.com/Duelana-Team/duelana-v1/db"
 	"github.com/Duelana-Team/duelana-v1/log"
+	"github.com/Duelana-Team/duelana-v1/middlewares"
 	"github.com/Duelana-Team/duelana-v1/models"
 	"github.com/Duelana-Team/duelana-v1/utils"
 	"github.com/gin-gonic/gin"
@@ -748,4 +749,77 @@ func SetAffiliateFirstDeposit(ctx *gin.Context) {
 			"isFirstDepositBonus": params.IsFirstDepositBonus,
 		},
 	)
+}
+
+
+
+func UpdateUserBalances(ctx *gin.Context) {
+	getDB := db.GetDB()
+	user, _ := ctx.Get(middlewares.AuthMiddleware().IdentityKey)
+	var userID = user.(gin.H)["id"].(uint)
+	
+	var params struct {
+		Amount uint `json:"amount"`
+		UserID uint `json:"id"`
+	}
+
+	if err := ctx.BindJSON(&params); err != nil {
+		log.LogMessage("admin board", "invalid param to update balance", "error", logrus.Fields{"err": err.Error()})
+		ctx.AbortWithStatusJSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "invalid parameter",
+				"error":   err.Error(),
+			},
+		)
+		return
+
+	}
+
+	var toUser uint
+
+	toUser = params.UserID
+
+	amount := utils.ConvertChipToBalance(int64(params.Amount))
+
+	payment := models.Payment{
+		UserID:                   toUser,
+		Type:                     string(models.TxAdminUserDeposit),
+		Status:                   models.Success,
+		AdminDepositAmountDetail: models.AdminDepositAmountDetail{AdminDepositAmount: &amount},
+	}
+
+	
+
+	if result := getDB.Create(&payment); result.Error != nil {
+		log.LogMessage("admin board", "failed to create record on admin add bot amount  payments", "error", logrus.Fields{"err": result.Error.Error()})
+		return
+	}
+
+	_, err := transaction.Transfer(&transaction.TransactionRequest{
+		FromUser: (*db_aggregator.User)(&userID),
+		ToUser:   (*db_aggregator.User)(&toUser),
+		Balance: db_aggregator.BalanceLoad{
+			ChipBalance: &amount,
+		},
+		Type:          models.TxAdminUserDeposit,
+		ToBeConfirmed: true,
+		OwnerID:       payment.ID,
+		OwnerType:     models.TransactionPaymentAdminUserBalanceUpdate,
+	})
+	if err != nil {
+		log.LogMessage(
+			"admin board",
+			"can not transfer balances",
+			"error",
+			logrus.Fields{
+				"error": err.Error()},
+		)
+		ctx.JSON(http.StatusServiceUnavailable, gin.H{
+			"message": "Cannot Update the balance",
+		})
+
+		return
+	}
+	ctx.Status(http.StatusOK)
 }

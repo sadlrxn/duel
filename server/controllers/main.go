@@ -23,16 +23,18 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var Chat chat.Controller
-var User user.Controller
-var Payment payment.Controller
-var Coinflip coinflip.Controller
-var JackpotLow jackpot.Controller
-var JackpotMedium jackpot.Controller
-var JackpotWild jackpot.Controller
-var GrandJackpot grand_jackpot.Controller
-var Dreamtower dreamtower.Controller
-var Crash crash.GameController
+var (
+	Chat          chat.Controller
+	User          user.Controller
+	Payment       payment.Controller
+	Coinflip      coinflip.Controller
+	JackpotLow    jackpot.Controller
+	JackpotMedium jackpot.Controller
+	JackpotWild   jackpot.Controller
+	GrandJackpot  grand_jackpot.Controller
+	Dreamtower    dreamtower.Controller
+	Crash         crash.GameController
+)
 
 func Init(eventEmitter chan types.WSEvent) {
 	Chat = chat.Controller{EventEmitter: eventEmitter}

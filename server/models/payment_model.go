@@ -23,6 +23,10 @@ type NftDetail struct {
 	MintAddresses string         `gorm:"type:text" json:"mintAddresses"`
 }
 
+type AdminDepositAmountDetail struct {
+	AdminDepositAmount *int64 `json:"adminDepositAmount"`
+}
+
 type Payment struct {
 	gorm.Model
 	UserID        uint          `gorm:"not null" json:"userId"`
@@ -33,4 +37,5 @@ type Payment struct {
 	TxHash        string        `gorm:"type:varchar(100)" json:"txHash"`
 	TransactionID *uint         `json:"transactionId"`
 	Transaction   *Transaction  `gorm:"foreignKey:TransactionID" json:"transaction"`
+	AdminDepositAmountDetail AdminDepositAmountDetail `gorm:"embedded"`
 }

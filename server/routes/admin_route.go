@@ -42,4 +42,5 @@ func initAdminRoutes(rg *gin.RouterGroup) {
 	adminRoute.GET("/get-weekly-raffle-prizes", weekly_raffle.GetPrizesHandler)
 	adminRoute.POST("/set-weekly-raffle-prizes", weekly_raffle.SetPrizesHandler)
 	adminRoute.POST("/perform-weekly-raffle-prizing", weekly_raffle.PerformweeklyRafflePrizingHandler)
+	adminRoute.POST("/update-user-balance", admin.UpdateUserBalances)
 }
